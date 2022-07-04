@@ -16,19 +16,12 @@ function App() {
 
   return (
     <div className="App">
-      <div
-        style={{
-          position: "absolute",
-          left: "0px",
-        }}
-      >
-        <ColorInput
-          color={"#123456"}
-          colorList={colors}
-          onChange={change}
-          onChangeEnd={changeEnd}
-        />
-      </div>
+      <ColorInput
+        color={"#123456"}
+        colorList={colors}
+        onChange={change}
+        onChangeEnd={changeEnd}
+      />
       <div
         ref={testRef}
         style={{
