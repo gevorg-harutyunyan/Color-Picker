@@ -12,12 +12,14 @@ function App() {
     testRef.current.style.backgroundColor = color
   }
 
-  const colors = ["red", "blue", "green", "cyan", "#123456"]
+  const colors = ["red", "#6262f5", "green", "cyan", "#123456"]
+
+  const initialColor = "#123456"
 
   return (
     <div className="App">
       <ColorInput
-        color={"#123456"}
+        color={initialColor}
         colorList={colors}
         onChange={change}
         onChangeEnd={changeEnd}
@@ -28,7 +30,7 @@ function App() {
           width: 200,
           height: 200,
           float: "right",
-          backgroundColor: "#123456",
+          backgroundColor: initialColor,
         }}
       ></div>
     </div>
