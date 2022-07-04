@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { useRef } from "react"
+import "./App.css"
+import { ColorInput } from "./ColorInput"
 
 function App() {
+  const testRef = useRef()
+  const change = (color) => {
+    testRef.current.style.backgroundColor = color
+  }
+
+  const changeEnd = (color) => {
+    testRef.current.style.backgroundColor = color
+  }
+
+  const colors = ["red", "blue", "green", "cyan", "#123456"]
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div
+        style={{
+          position: "absolute",
+          left: "0px",
+        }}
+      >
+        <ColorInput
+          color={"#123456"}
+          colorList={colors}
+          onChange={change}
+          onChangeEnd={changeEnd}
+        />
+      </div>
+      <div
+        ref={testRef}
+        style={{
+          width: 200,
+          height: 200,
+          float: "right",
+          backgroundColor: "#123456",
+        }}
+      ></div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
