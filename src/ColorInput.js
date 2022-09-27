@@ -5,20 +5,26 @@ import { ColorPicker } from "./CollorPicker"
 export const ColorInput = ({ color, colorList, onChange, onChangeEnd }) => {
   const ref = useRef()
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
-  const openColorPicker = () => setIsColorPickerOpen(true)
   const closeColorPicker = () => setIsColorPickerOpen(false)
   const toggleColorPicker = () => setIsColorPickerOpen(!isColorPickerOpen)
 
-  const click = () => {
-    openColorPicker()
+  const click = (e) => {
+    toggleColorPicker()
+  }
+
+  const clickOutside = (e) => {
+    if (isColorPickerOpen && !ref.current.contains(e.target)) {
+      closeColorPicker()
+    }
   }
 
   useEffect(() => {
-    ref.current.addEventListener("click", click)
+    window.addEventListener("mousedown", clickOutside)
+
     return () => {
-      ref.current.removeEventListener("click", click)
+      window.removeEventListener("mousedown", clickOutside)
     }
-  }, [])
+  }, [isColorPickerOpen])
 
   const change = (color) => {
     ref.current.style.backgroundColor = color
@@ -31,12 +37,11 @@ export const ColorInput = ({ color, colorList, onChange, onChangeEnd }) => {
   }
 
   return (
-    <Styled.ColorIcon ref={ref} color={color}>
+    <Styled.ColorIcon ref={ref} color={color} onClick={click}>
       {isColorPickerOpen && (
         <ColorPicker
           initialColor={color}
           colorList={colorList}
-          closeColorPicker={closeColorPicker}
           onChange={change}
           onChangeEnd={changeEnd}
         />

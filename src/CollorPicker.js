@@ -3,7 +3,6 @@ import * as Styled from "./styled"
 import { ColorRange } from "./ColorRange"
 import { OpacityRange } from "./OpacityRange"
 import {
-  isClickedInElement,
   linearGradient,
   pointerMove,
   strToRGBA,
@@ -21,7 +20,6 @@ import { ColorList } from "./ColorList"
 export const ColorPicker = ({
   initialColor,
   colorList,
-  closeColorPicker,
   onChange,
   onChangeEnd,
 }) => {
@@ -45,9 +43,6 @@ export const ColorPicker = ({
   }
 
   useEffect(() => {
-    window.addEventListener("mousedown", function click(e) {
-      !isClickedInElement(e, "ColorPicker") && closeColorPicker()
-    })
     RGBA = strToRGBA(initialColor)
     HSVA = RGBAtoHSVA(RGBA)
     update()
@@ -112,7 +107,11 @@ export const ColorPicker = ({
   }
 
   return (
-    <Styled.ColorPicker id="ColorPicker">
+    <Styled.ColorPicker
+      onClick={(e) => {
+        e.stopPropagation()
+      }}
+    >
       <ColorArea
         areaPointer={areaPointer}
         onChange={changeArea}

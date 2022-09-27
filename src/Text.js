@@ -10,7 +10,7 @@ export const Text = ({ textRef, onChange }) => {
 
   return (
     <Styled.TextContainer ref={textRef}>
-      <Styled.TextInput contentEditable={true} onKeyDown={change} />
+      <Styled.TextInput onKeyDown={change} />
     </Styled.TextContainer>
   )
 }
