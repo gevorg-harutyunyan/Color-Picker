@@ -1,32 +1,18 @@
 const X = 0,
   Y = 1
 
-export const isClickedInElement = (event, id) =>
-  event.path.some((elem) => elem.id === id)
-
 export const transformToValue = (number, max) => parseInt((100 / max) * number)
-
-export const transformToX = (opacity, max) => parseInt(opacity / (100 / max))
 
 export const getAlpha = (value) => value / 100
 
 export const getHex = (value) =>
   ("0" + parseInt(value, 10).toString(16)).slice(-2)
 
-export const rgb2hex = (rgb) => {
-  rgb = rgb.match(
-    /^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i
-  )
-  return rgb && rgb.length === 4
-    ? getHex(rgb[1]) + getHex(rgb[2]) + getHex(rgb[3])
-    : ""
-}
-
-export const setBackground = (element, value) => {
+const setBackground = (element, value) => {
   element.style.background = value
 }
 
-export const setMainBackground = (element, value) => {
+const setMainBackground = (element, value) => {
   element.getElementsByClassName("bg-main")[0].style.background = value
 }
 
@@ -227,37 +213,31 @@ export const RGBAToHex = (rgba) => {
 export const strToRGBA = (str) => {
   const regex =
     /^((rgba)|rgb)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i
-  let match, rgba
 
   // Use canvas to convert the string to a valid color string
   const ctx = document.createElement("canvas").getContext("2d")
   ctx.fillStyle = str
-  match = regex.exec(ctx.fillStyle)
+  const match = regex.exec(ctx.fillStyle)
 
   if (match) {
-    rgba = {
+    return {
       r: match[3] * 1,
       g: match[4] * 1,
       b: match[5] * 1,
-      a: match[6] * 1,
-    }
-
-    // Workaround to mitigate a Chromium bug where the alpha value is rounded incorrectly
-    rgba.a = +rgba.a.toFixed(2)
-  } else {
-    match = ctx.fillStyle
-      .replace("#", "")
-      .match(/.{2}/g)
-      .map((h) => parseInt(h, 16))
-    rgba = {
-      r: match[0],
-      g: match[1],
-      b: match[2],
-      a: 1,
+      a: (match[6] * 1).toFixed(2) * 1,
     }
   }
 
-  return rgba
+  const match2 = ctx.fillStyle
+    .replace("#", "")
+    .match(/.{2}/g)
+    .map((h) => parseInt(h, 16))
+  return {
+    r: match2[0],
+    g: match2[1],
+    b: match2[2],
+    a: 1,
+  }
 }
 
 export const RGBAToStr = (rgba, isAlpha = true) => {
