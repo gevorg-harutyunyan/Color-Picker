@@ -1,5 +1,5 @@
 import * as Styled from "./styled"
-import { RGBAtoHSVA, strToRGBA } from "./util"
+import { strToRGBA } from "./util"
 
 export const ColorList = ({ colorList, onChange }) => {
   const clicked = (e) => {

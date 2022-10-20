@@ -5,7 +5,7 @@ export const ColorIcon = styled.div`
   border: 1px solid white;
   width: 30px;
   height: 30px;
-  background-color: ${(props) => props.color};
+  background-color: ${({ color }) => color};
 `
 
 export const ColorPicker = styled.div`
@@ -27,13 +27,12 @@ export const Container = styled.div`
 `
 
 export const RangeContainer = styled.div`
-  // width: 90%;
   height: 20px;
   margin: 20px auto;
   position: relative;
 `
 
-const pointer = `
+const pointer = styled.div`
   width: 12px;
   height: 12px;
   position: absolute;
@@ -44,29 +43,25 @@ const pointer = `
   border-radius: 50%;
 `
 
-export const AreaPointer = styled.div`
-  ${pointer}
+export const AreaPointer = styled(pointer)`
   margin: -10px 0 0 -10px;
 `
 
-export const Pointer = styled.div`
-  ${pointer}
+export const Pointer = styled(pointer)`
   margin: 0 0 0 -10px;
 `
 
-const BackgroundStyles = `
+const Background = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
 `
 
-export const BgMain = styled.div`
-  ${BackgroundStyles}
-  background: ${(props) => props.color};
+export const BgMain = styled(Background)`
+  background: ${({ color }) => color};
 `
 
-export const BgMainGradient = styled.div`
-  ${BackgroundStyles}
+export const BgMainGradient = styled(Background)`
   border-radius: 15px;
   background: linear-gradient(
     to right,
@@ -76,8 +71,7 @@ export const BgMainGradient = styled.div`
   );
 `
 
-export const BgAll = styled.div`
-  ${BackgroundStyles}
+export const BgAll = styled(Background)`
   border-radius: 15px;
   background: linear-gradient(
     to right,
@@ -91,18 +85,15 @@ export const BgAll = styled.div`
   );
 `
 
-export const BgWhite = styled.div`
-  ${BackgroundStyles}
+export const BgWhite = styled(Background)`
   background: linear-gradient(to right, #fff 0%, rgba(255, 255, 255, 0) 100%);
 `
 
-export const BgBlack = styled.div`
-  ${BackgroundStyles}
+export const BgBlack = styled(Background)`
   background: linear-gradient(to bottom, transparent 0%, #000 100%);
 `
 
-export const BgLattice = styled.div`
-  ${BackgroundStyles}
+export const BgLattice = styled(Background)`
   border-radius: 15px;
   background-image: linear-gradient(45deg, #ccc 25%, transparent 25%),
     linear-gradient(-45deg, #ccc 25%, transparent 25%),
@@ -142,5 +133,5 @@ export const ColorListItem = styled.div`
   border: 1px solid #777;
   border-radius: 3px;
   display: inline-block;
-  background-color: ${(props) => props.color};
+  background-color: ${({ color }) => color};
 `

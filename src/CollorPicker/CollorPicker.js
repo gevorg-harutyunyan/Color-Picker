@@ -1,7 +1,10 @@
-import { useEffect } from "react"
-import * as Styled from "./styled"
+import { useEffect, useRef } from "react"
 import { ColorRange } from "./ColorRange"
 import { OpacityRange } from "./OpacityRange"
+import { ColorArea } from "./ColorArea"
+import { Text } from "./Text"
+import { ColorList } from "./ColorList"
+import * as Styled from "./styled"
 import {
   linearGradient,
   pointerMove,
@@ -12,10 +15,6 @@ import {
   HSVAtoRGBA,
   setTextValue,
 } from "./util"
-import { useRef } from "react"
-import { ColorArea } from "./ColorArea"
-import { Text } from "./Text"
-import { ColorList } from "./ColorList"
 
 export const ColorPicker = ({
   initialColor,

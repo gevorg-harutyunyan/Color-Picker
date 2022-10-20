@@ -106,8 +106,6 @@ export const pointerMove = () => {
     setBackground(pointer, color)
   }
 
-  // setBackground
-  // setMainBackground
   return {
     getPointerԼimit,
     getPointerNewCoords,
@@ -265,7 +263,6 @@ export const strToRGBA = (str) => {
 export const RGBAToStr = (rgba, isAlpha = true) => {
   if (!isAlpha || rgba.a === 1) {
     return `rgb(${rgba.r}, ${rgba.g}, ${rgba.b})`
-  } else {
-    return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`
   }
+  return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`
 }

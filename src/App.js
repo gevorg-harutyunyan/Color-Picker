@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import "./App.css"
-import { ColorInput } from "./ColorInput"
+import { ColorInput } from "./CollorPicker"
 
 function App() {
   const testRef = useRef()
