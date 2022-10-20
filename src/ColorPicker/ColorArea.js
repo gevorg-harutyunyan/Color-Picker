@@ -32,7 +32,7 @@ export const ColorArea = ({ areaPointer, onChange, onChangeEnd }) => {
 
   return (
     <Styled.ColorArea ref={areaRef}>
-      <Styled.AreaPointer ref={pointerRef} />
+      <Styled.Pointer area ref={pointerRef} />
       <Styled.BgMain className="bg-main" />
       <Styled.BgWhite />
       <Styled.BgBlack />

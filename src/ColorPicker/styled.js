@@ -32,7 +32,7 @@ export const RangeContainer = styled.div`
   position: relative;
 `
 
-const pointer = styled.div`
+export const Pointer = styled.div`
   width: 12px;
   height: 12px;
   position: absolute;
@@ -41,14 +41,8 @@ const pointer = styled.div`
   border: 4px solid white;
   outline: 1px solid grey;
   border-radius: 50%;
-`
-
-export const AreaPointer = styled(pointer)`
-  margin: -10px 0 0 -10px;
-`
-
-export const Pointer = styled(pointer)`
-  margin: 0 0 0 -10px;
+  margin-left: -10px;
+  margin-top: ${({ area }) => (area ? "-10px" : 0)};
 `
 
 const Background = styled.div`
