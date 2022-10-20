@@ -2,8 +2,7 @@ import * as Styled from "./styled"
 import { strToRGBA } from "./util"
 
 export const ColorList = ({ colorList, onChange }) => {
-  const clicked = (e) => {
-    const index = parseInt(e.target.id)
+  const clicked = (index) => () => {
     onChange(strToRGBA(colorList[index]))
   }
 
@@ -13,9 +12,8 @@ export const ColorList = ({ colorList, onChange }) => {
         return (
           <Styled.ColorListItem
             key={index}
-            id={`${index}-Color List Item`}
             color={color}
-            onClick={clicked}
+            onClick={clicked(index)}
           />
         )
       })}
