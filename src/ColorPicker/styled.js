@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 export const ColorIcon = styled.div`
   position: absolute;
@@ -45,56 +45,45 @@ export const Pointer = styled.div`
   margin-top: ${({ area }) => (area ? "-10px" : 0)};
 `
 
-const Background = styled.div`
+const backgrounds = {
+  white: css`
+    background: linear-gradient(to right, #fff 0%, rgba(255, 255, 255, 0) 100%);
+  `,
+  black: css`
+    background: linear-gradient(to bottom, transparent 0%, #000 100%);
+  `,
+  all: css`
+    border-radius: 15px;
+    background: linear-gradient(
+      to right,
+      #f00 0%,
+      #ff0 16.66%,
+      #0f0 33.33%,
+      #0ff 50%,
+      #00f 66.66%,
+      #f0f 83.33%,
+      #f00 100%
+    );
+  `,
+  mainGradient: css`
+    border-radius: 15px;
+  `,
+  lattice: css`
+    border-radius: 15px;
+    background: linear-gradient(45deg, #ccc 25%, transparent 25%),
+      linear-gradient(-45deg, #ccc 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #ccc 75%),
+      linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+  `,
+}
+
+export const Background = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-`
-
-export const BgMain = styled(Background)`
-  background: ${({ color }) => color};
-`
-
-export const BgMainGradient = styled(Background)`
-  border-radius: 15px;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    ${(props) => props.color} 85%,
-    ${(props) => props.color} 100%
-  );
-`
-
-export const BgAll = styled(Background)`
-  border-radius: 15px;
-  background: linear-gradient(
-    to right,
-    #f00 0%,
-    #ff0 16.66%,
-    #0f0 33.33%,
-    #0ff 50%,
-    #00f 66.66%,
-    #f0f 83.33%,
-    #f00 100%
-  );
-`
-
-export const BgWhite = styled(Background)`
-  background: linear-gradient(to right, #fff 0%, rgba(255, 255, 255, 0) 100%);
-`
-
-export const BgBlack = styled(Background)`
-  background: linear-gradient(to bottom, transparent 0%, #000 100%);
-`
-
-export const BgLattice = styled(Background)`
-  border-radius: 15px;
-  background-image: linear-gradient(45deg, #ccc 25%, transparent 25%),
-    linear-gradient(-45deg, #ccc 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #ccc 75%),
-    linear-gradient(-45deg, transparent 75%, #ccc 75%);
-  background-size: 16px 16px;
-  background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+  ${({ type }) => backgrounds[type]}
 `
 
 export const TextContainer = styled.div``

@@ -32,7 +32,7 @@ export const ColorRange = ({ mainColorPointer, onChange, onChangeEnd }) => {
   return (
     <Styled.RangeContainer ref={mainColorRef}>
       <Styled.Pointer ref={pointerRef} />
-      <Styled.BgAll />
+      <Styled.Background type="all" />
     </Styled.RangeContainer>
   )
 }

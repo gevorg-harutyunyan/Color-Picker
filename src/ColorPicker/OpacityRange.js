@@ -32,8 +32,8 @@ export const OpacityRange = ({ opacityPointer, onChange, onChangeEnd }) => {
   return (
     <Styled.RangeContainer ref={opacityRef}>
       <Styled.Pointer ref={pointerRef} />
-      <Styled.BgLattice />
-      <Styled.BgMainGradient color="red" className="bg-main" />
+      <Styled.Background type="lattice" />
+      <Styled.Background type="mainGradient" className="bg-main" />
     </Styled.RangeContainer>
   )
 }

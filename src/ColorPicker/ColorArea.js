@@ -33,9 +33,9 @@ export const ColorArea = ({ areaPointer, onChange, onChangeEnd }) => {
   return (
     <Styled.ColorArea ref={areaRef}>
       <Styled.Pointer area ref={pointerRef} />
-      <Styled.BgMain className="bg-main" />
-      <Styled.BgWhite />
-      <Styled.BgBlack />
+      <Styled.Background className="bg-main" />
+      <Styled.Background type="white" />
+      <Styled.Background type="black" />
     </Styled.ColorArea>
   )
 }
