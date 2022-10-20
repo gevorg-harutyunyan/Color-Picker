@@ -5,7 +5,7 @@ export const ColorRange = ({ mainColorPointer, onChange, onChangeEnd }) => {
   const mainColorRef = useRef()
   const pointerRef = useRef()
   const mouseMove = (e) => {
-    const limit = mainColorPointer.getPointerԼimit()
+    const limit = mainColorPointer.getPointerLimit()
     const [X] = mainColorPointer.getPointerNewCoords(e)
     mainColorPointer.changePointerX(X)
     const hue = Math.round((X / limit.right) * 360)

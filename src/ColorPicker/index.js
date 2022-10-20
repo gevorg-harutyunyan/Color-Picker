@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { ColorPicker } from "./CollorPicker"
+import { ColorPicker } from "./ColorPicker"
 import * as Styled from "./styled"
 
 export const ColorInput = ({ color, colorList, onChange, onChangeEnd }) => {

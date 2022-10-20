@@ -6,7 +6,7 @@ export const OpacityRange = ({ opacityPointer, onChange, onChangeEnd }) => {
   const opacityRef = useRef()
   const pointerRef = useRef()
   const mouseMove = (e) => {
-    const limit = opacityPointer.getPointerԼimit()
+    const limit = opacityPointer.getPointerLimit()
     const [X] = opacityPointer.getPointerNewCoords(e)
     opacityPointer.changePointerX(X)
     onChange(getAlpha(transformToValue(X, limit.right)))

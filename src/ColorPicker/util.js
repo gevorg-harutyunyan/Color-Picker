@@ -38,7 +38,7 @@ export const pointerMove = () => {
     pointer = pointerEl
   }
 
-  const getPointerԼimit = () => {
+  const getPointerLimit = () => {
     const areaRect = area.getBoundingClientRect()
     return {
       top: 0,
@@ -49,7 +49,7 @@ export const pointerMove = () => {
   }
 
   const getPointerNewCoords = (event) => {
-    const areaBorder = getPointerԼimit()
+    const areaBorder = getPointerLimit()
     const { x, y } = area.getBoundingClientRect()
     let X = event.clientX - x
     let Y = event.clientY - y
@@ -82,14 +82,14 @@ export const pointerMove = () => {
   }
 
   const updateCoords = (coefficient) => {
-    const limit = getPointerԼimit()
+    const limit = getPointerLimit()
     changePointerCoords([
       coefficient[X] * limit.right,
       coefficient[Y] * limit.bottom,
     ])
   }
   const updateCoordX = (coefficient) => {
-    const limit = getPointerԼimit()
+    const limit = getPointerLimit()
     changePointerX(coefficient * limit.right)
   }
 
@@ -107,7 +107,7 @@ export const pointerMove = () => {
   }
 
   return {
-    getPointerԼimit,
+    getPointerLimit,
     getPointerNewCoords,
     changePointerX,
     changePointerCoords,
@@ -161,25 +161,25 @@ export const RGBAtoHSVA = (rgba) => {
   const red = rgba.r / 255
   const green = rgba.g / 255
   const blue = rgba.b / 255
-  const xmax = Math.max(red, green, blue)
-  const xmin = Math.min(red, green, blue)
-  const chroma = xmax - xmin
-  const value = xmax
+  const xMax = Math.max(red, green, blue)
+  const xMin = Math.min(red, green, blue)
+  const chroma = xMax - xMin
+  const value = xMax
   let hue = 0
   let saturation = 0
 
   if (chroma) {
-    if (xmax === red) {
+    if (xMax === red) {
       hue = (green - blue) / chroma
     }
-    if (xmax === green) {
+    if (xMax === green) {
       hue = 2 + (blue - red) / chroma
     }
-    if (xmax === blue) {
+    if (xMax === blue) {
       hue = 4 + (red - green) / chroma
     }
-    if (xmax) {
-      saturation = chroma / xmax
+    if (xMax) {
+      saturation = chroma / xMax
     }
   }
 
