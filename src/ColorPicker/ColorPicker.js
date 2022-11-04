@@ -53,7 +53,7 @@ export const ColorPicker = ({
   }
 
   const updatePointerColors = () => {
-    const color = RGBAToStr(HSVAtoRGBA(HSVA), false)
+    const color = RGBAToStr(HSVAtoRGBA(HSVA))
     const hueColor = `hsl(${HSVA.h}, 100%, 50%)`
     areaPointer.updatePointerColor(color)
     areaPointer.updateAreaBackground(hueColor)

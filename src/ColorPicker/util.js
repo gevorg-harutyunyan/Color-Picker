@@ -240,9 +240,5 @@ export const strToRGBA = (str) => {
   }
 }
 
-export const RGBAToStr = (rgba, isAlpha = true) => {
-  if (!isAlpha || rgba.a === 1) {
-    return `rgb(${rgba.r}, ${rgba.g}, ${rgba.b})`
-  }
-  return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`
-}
+export const RGBAToStr = (rgba) =>
+  `rgb(${rgba.r}, ${rgba.g}, ${rgba.b}${rgba.a !== 1 ? `, ${rgba.a}` : ""})`
