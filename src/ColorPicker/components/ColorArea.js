@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import * as Styled from "./styled"
+import * as Styled from "../styled"
 
 export const ColorArea = ({ areaPointer, onChange, onChangeEnd }) => {
   const areaRef = useRef()

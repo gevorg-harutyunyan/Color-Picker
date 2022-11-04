@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import * as Styled from "./styled"
+import * as Styled from "../styled"
 
 export const ColorRange = ({ mainColorPointer, onChange, onChangeEnd }) => {
   const mainColorRef = useRef()

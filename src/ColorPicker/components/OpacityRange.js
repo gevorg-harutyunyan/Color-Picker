@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
-import * as Styled from "./styled"
-import { getAlpha, transformToValue } from "./util"
+import * as Styled from "../styled"
+import { getAlpha, transformToValue } from "../util"
 
 export const OpacityRange = ({ opacityPointer, onChange, onChangeEnd }) => {
   const opacityRef = useRef()

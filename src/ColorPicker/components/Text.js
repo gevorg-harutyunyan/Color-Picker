@@ -1,5 +1,5 @@
-import * as Styled from "./styled"
-import { strToRGBA } from "./util"
+import * as Styled from "../styled"
+import { strToRGBA } from "../util"
 
 export const Text = ({ textRef, onChange }) => {
   const change = (e) => {

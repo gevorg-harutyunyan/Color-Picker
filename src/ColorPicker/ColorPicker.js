@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react"
-import { ColorRange } from "./ColorRange"
-import { OpacityRange } from "./OpacityRange"
-import { ColorArea } from "./ColorArea"
-import { Text } from "./Text"
-import { ColorList } from "./ColorList"
+import { ColorRange } from "./components/ColorRange"
+import { OpacityRange } from "./components/OpacityRange"
+import { ColorArea } from "./components/ColorArea"
+import { Text } from "./components/Text"
+import { ColorList } from "./styled"
 import * as Styled from "./styled"
 import {
   linearGradient,
