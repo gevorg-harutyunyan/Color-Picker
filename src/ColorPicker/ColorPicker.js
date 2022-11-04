@@ -3,7 +3,7 @@ import { ColorRange } from "./components/ColorRange"
 import { OpacityRange } from "./components/OpacityRange"
 import { ColorArea } from "./components/ColorArea"
 import { Text } from "./components/Text"
-import { ColorList } from "./styled"
+import { ColorList } from "./components/ColorList"
 import * as Styled from "./styled"
 import {
   linearGradient,
