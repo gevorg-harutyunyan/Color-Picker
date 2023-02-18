@@ -1,8 +1,15 @@
-import * as Styled from "../styled"
+import { FC } from "react"
 import { strToRGBA } from "../util"
+import { RGBA } from "ColorPicker/types"
+import * as Styled from "../styled"
 
-export const ColorList = ({ colorList, onChange }) => {
-  const clicked = (color) => () => {
+type Props = {
+  colorList: string[]
+  onChange: (rgba: RGBA) => void
+}
+
+export const ColorList: FC<Props> = ({ colorList, onChange }) => {
+  const clicked = (color: string) => () => {
     onChange(strToRGBA(color))
   }
 

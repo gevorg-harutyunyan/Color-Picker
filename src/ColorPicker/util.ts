@@ -1,25 +1,29 @@
+import { Coords, HSVA, PointerMoveFn, RGBA } from "./types"
+
 const X = 0,
   Y = 1
 
-export const transformToValue = (number, max) => parseInt((100 / max) * number)
+export const transformToValue = (number: number, max: number): number =>
+  Math.floor((100 / max) * number)
 
-export const getAlpha = (value) => value / 100
+export const getAlpha = (value: number): number => value / 100
 
-export const getHex = (value) =>
-  ("0" + parseInt(value, 10).toString(16)).slice(-2)
-
-const setBackground = (element, value) => {
+const setBackground = (element: HTMLElement, value: string) => {
   element.style.background = value
 }
 
-const setMainBackground = (element, value) => {
-  element.getElementsByClassName("bg-main")[0].style.background = value
+const setMainBackground = (element: HTMLDivElement, value: string) => {
+  const mainEl = element.getElementsByClassName("bg-main")[0] as HTMLDivElement
+  mainEl.style.background = value
 }
 
-export const pointerMove = () => {
-  let area, pointer
+export const pointerMove = (): PointerMoveFn => {
+  let area: HTMLDivElement, pointer: HTMLDivElement
 
-  const setAreaAndPointer = (areaEl, pointerEl) => {
+  const setAreaAndPointer = (
+    areaEl: HTMLDivElement,
+    pointerEl: HTMLDivElement
+  ) => {
     area = areaEl
     pointer = pointerEl
   }
@@ -28,13 +32,13 @@ export const pointerMove = () => {
     const areaRect = area.getBoundingClientRect()
     return {
       top: 0,
-      bottom: parseInt(areaRect.height),
+      bottom: Math.floor(areaRect.height),
       left: 0,
-      right: parseInt(areaRect.width),
+      right: Math.floor(areaRect.width),
     }
   }
 
-  const getPointerNewCoords = (event) => {
+  const getPointerNewCoords = (event: MouseEvent): Coords => {
     const areaBorder = getPointerLimit()
     const { x, y } = area.getBoundingClientRect()
     let X = event.clientX - x
@@ -54,45 +58,46 @@ export const pointerMove = () => {
     return [X, Y]
   }
 
-  const changePointerX = (X) => {
+  const changePointerX = (X: number): void => {
     pointer.style.left = X + "px"
   }
 
-  const changePointerY = (Y) => {
+  const changePointerY = (Y: number): void => {
     pointer.style.top = Y + "px"
   }
 
-  const changePointerCoords = ([X, Y]) => {
+  const changePointerCoords = ([X, Y]: Coords): void => {
     changePointerX(X)
     changePointerY(Y)
   }
 
-  const updateCoords = (coefficient) => {
+  const updateCoords = (coefficient: number[]): void => {
     const limit = getPointerLimit()
     changePointerCoords([
       coefficient[X] * limit.right,
       coefficient[Y] * limit.bottom,
     ])
   }
-  const updateCoordX = (coefficient) => {
+  const updateCoordX = (coefficient: number): void => {
     const limit = getPointerLimit()
     changePointerX(coefficient * limit.right)
   }
 
-  const coordsToCoefficient = ([X, Y]) => {
+  const coordsToCoefficient = ([X, Y]: Coords): number[] => {
     const areaRect = area.getBoundingClientRect()
     return [X / areaRect.width, Y / areaRect.height]
   }
 
-  const updateAreaBackground = (color) => {
+  const updateAreaBackground = (color: string): void => {
     setMainBackground(area, color)
   }
 
-  const updatePointerColor = (color) => {
+  const updatePointerColor = (color: string): void => {
     setBackground(pointer, color)
   }
 
   return {
+    setAreaAndPointer,
     getPointerLimit,
     getPointerNewCoords,
     changePointerX,
@@ -102,24 +107,17 @@ export const pointerMove = () => {
     coordsToCoefficient,
     updateAreaBackground,
     updatePointerColor,
-    setAreaAndPointer,
   }
 }
 
-export const setTextValue = (element, value) => {
-  element.children[0].value = value
+export const setTextValue = (element: HTMLDivElement | null, value: string) => {
+  element?.children[0].setAttribute("value", value)
 }
 
-export const linearGradient = (value) =>
+export const linearGradient = (value: string): string =>
   `linear-gradient(to right,transparent 0%, ${value} 100%)`
 
-export const updateRGB = (RGBA, obj) => {
-  RGBA.R = obj.R
-  RGBA.G = obj.G
-  RGBA.B = obj.B
-}
-
-export const HSVAtoRGBA = (hsva) => {
+export const HSVAtoRGBA = (hsva: HSVA): RGBA => {
   const saturation = hsva.s / 100
   const value = hsva.v / 100
   let chroma = saturation * value
@@ -143,7 +141,7 @@ export const HSVAtoRGBA = (hsva) => {
   }
 }
 
-export const RGBAtoHSVA = (rgba) => {
+export const RGBAtoHSVA = (rgba: RGBA): HSVA => {
   const red = rgba.r / 255
   const green = rgba.g / 255
   const blue = rgba.b / 255
@@ -180,7 +178,7 @@ export const RGBAtoHSVA = (rgba) => {
   return hsva
 }
 
-export const RGBAToHex = (rgba) => {
+export const RGBAToHex = (rgba: RGBA): string => {
   let R = rgba.r.toString(16)
   let G = rgba.g.toString(16)
   let B = rgba.b.toString(16)
@@ -210,28 +208,39 @@ export const RGBAToHex = (rgba) => {
   return "#" + R + G + B + A
 }
 
-export const strToRGBA = (str) => {
+const emptyRGBA = {
+  r: 0,
+  g: 0,
+  b: 0,
+  a: 0,
+}
+
+export const strToRGBA = (str: string): RGBA => {
   const regex =
     /^((rgba)|rgb)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i
 
   // Use canvas to convert the string to a valid color string
   const ctx = document.createElement("canvas").getContext("2d")
+  if (!ctx) return emptyRGBA
   ctx.fillStyle = str
   const match = regex.exec(ctx.fillStyle)
 
   if (match) {
     return {
-      r: match[3] * 1,
-      g: match[4] * 1,
-      b: match[5] * 1,
-      a: (match[6] * 1).toFixed(2) * 1,
+      r: Number(match[3]),
+      g: Number(match[4]),
+      b: Number(match[5]),
+      a: Number(Number(match[6]).toFixed(2)),
     }
   }
 
   const match2 = ctx.fillStyle
     .replace("#", "")
     .match(/.{2}/g)
-    .map((h) => parseInt(h, 16))
+    ?.map((h) => parseInt(h, 16))
+
+  if (!match2) return emptyRGBA
+
   return {
     r: match2[0],
     g: match2[1],
@@ -240,5 +249,5 @@ export const strToRGBA = (str) => {
   }
 }
 
-export const RGBAToStr = (rgba) =>
+export const RGBAToStr = (rgba: RGBA): string =>
   `rgb(${rgba.r}, ${rgba.g}, ${rgba.b}${rgba.a !== 1 ? `, ${rgba.a}` : ""})`

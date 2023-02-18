@@ -1,15 +1,27 @@
-import { useEffect, useRef } from "react"
+import { FC, useEffect, useRef } from "react"
+import { PointerMoveFn } from "ColorPicker/types"
 import * as Styled from "../styled"
 
-export const ColorArea = ({ areaPointer, onChange, onChangeEnd }) => {
-  const areaRef = useRef()
-  const pointerRef = useRef()
-  const mouseMove = (e) => {
+type Props = {
+  areaPointer: PointerMoveFn
+  onChange: (saturation: number, value: number) => void
+  onChangeEnd: () => void
+}
+
+export const ColorArea: FC<Props> = ({
+  areaPointer,
+  onChange,
+  onChangeEnd,
+}) => {
+  const areaRef = useRef<HTMLDivElement>(null)
+  const pointerRef = useRef<HTMLDivElement>(null)
+
+  const mouseMove = (e: MouseEvent) => {
     const coords = areaPointer.getPointerNewCoords(e)
     areaPointer.changePointerCoords(coords)
-    const [X, Y] = areaPointer.coordsToCoefficient(coords)
-    const Saturation = Math.round(X * 100)
-    const Value = 100 - Math.round(Y * 100)
+    const [xCoefficient, yCoefficient] = areaPointer.coordsToCoefficient(coords)
+    const Saturation = Math.round(xCoefficient * 100)
+    const Value = 100 - Math.round(yCoefficient * 100)
     onChange(Saturation, Value)
   }
 
@@ -19,15 +31,16 @@ export const ColorArea = ({ areaPointer, onChange, onChangeEnd }) => {
     onChangeEnd()
   }
 
-  const mouseDown = (e) => {
+  const mouseDown = (e: MouseEvent) => {
     mouseMove(e)
     window.addEventListener("mousemove", mouseMove)
     window.addEventListener("mouseup", mouseUp)
   }
 
   useEffect(() => {
+    if (!areaRef.current || !pointerRef.current) return
     areaPointer.setAreaAndPointer(areaRef.current, pointerRef.current)
-    areaRef.current.addEventListener("mousedown", mouseDown)
+    areaRef.current?.addEventListener("mousedown", mouseDown)
   }, [])
 
   return (

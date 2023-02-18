@@ -1,10 +1,22 @@
-import { useEffect, useRef } from "react"
+import { FC, useEffect, useRef } from "react"
+import { PointerMoveFn } from "ColorPicker/types"
 import * as Styled from "../styled"
 
-export const ColorRange = ({ mainColorPointer, onChange, onChangeEnd }) => {
-  const mainColorRef = useRef()
-  const pointerRef = useRef()
-  const mouseMove = (e) => {
+type Props = {
+  mainColorPointer: PointerMoveFn
+  onChange: (hue: number) => void
+  onChangeEnd: () => void
+}
+
+export const ColorRange: FC<Props> = ({
+  mainColorPointer,
+  onChange,
+  onChangeEnd,
+}) => {
+  const mainColorRef = useRef<HTMLDivElement>(null)
+  const pointerRef = useRef<HTMLDivElement>(null)
+
+  const mouseMove = (e: MouseEvent) => {
     const limit = mainColorPointer.getPointerLimit()
     const [X] = mainColorPointer.getPointerNewCoords(e)
     mainColorPointer.changePointerX(X)
@@ -18,15 +30,16 @@ export const ColorRange = ({ mainColorPointer, onChange, onChangeEnd }) => {
     onChangeEnd()
   }
 
-  const mouseDown = (e) => {
+  const mouseDown = (e: MouseEvent) => {
     mouseMove(e)
     window.addEventListener("mousemove", mouseMove)
     window.addEventListener("mouseup", mouseUp)
   }
 
   useEffect(() => {
+    if (!mainColorRef.current || !pointerRef.current) return
     mainColorPointer.setAreaAndPointer(mainColorRef.current, pointerRef.current)
-    mainColorRef.current.addEventListener("mousedown", mouseDown)
+    mainColorRef.current?.addEventListener("mousedown", mouseDown)
   }, [])
 
   return (

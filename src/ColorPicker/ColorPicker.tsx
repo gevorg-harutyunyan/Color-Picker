@@ -1,10 +1,9 @@
-import { useEffect, useRef } from "react"
+import { FC, useEffect, useRef } from "react"
 import { ColorRange } from "./components/ColorRange"
 import { OpacityRange } from "./components/OpacityRange"
 import { ColorArea } from "./components/ColorArea"
 import { Text } from "./components/Text"
 import { ColorList } from "./components/ColorList"
-import * as Styled from "./styled"
 import {
   linearGradient,
   pointerMove,
@@ -15,14 +14,23 @@ import {
   HSVAtoRGBA,
   setTextValue,
 } from "./util"
+import { RGBA } from "./types"
+import * as Styled from "./styled"
 
-export const ColorPicker = ({
+type Props = {
+  initialColor: string
+  colorList: string[]
+  onChange: (color: string) => void
+  onChangeEnd: (color: string) => void
+}
+
+export const ColorPicker: FC<Props> = ({
   initialColor,
   colorList,
   onChange,
   onChangeEnd,
 }) => {
-  const textRef = useRef()
+  const textRef = useRef<HTMLDivElement>(null)
 
   const areaPointer = pointerMove()
   const mainColorPointer = pointerMove()
@@ -34,7 +42,7 @@ export const ColorPicker = ({
     v: 0,
     a: 1,
   }
-  let RGBA = {
+  let RGBA: RGBA = {
     r: 0,
     g: 0,
     b: 0,
@@ -73,7 +81,7 @@ export const ColorPicker = ({
     setTextValue(textRef.current, RGBAToHex(RGBA))
   }
 
-  const changeArea = (saturation, value) => {
+  const changeArea = (saturation: number, value: number) => {
     HSVA.s = saturation
     HSVA.v = value
     RGBA = HSVAtoRGBA(HSVA)
@@ -81,20 +89,20 @@ export const ColorPicker = ({
     dispatch()
   }
 
-  const changeMainColor = (hue) => {
+  const changeMainColor = (hue: number) => {
     HSVA.h = hue
     RGBA = HSVAtoRGBA(HSVA)
     updatePointerColors()
     dispatch()
   }
 
-  const changeOpacity = (opacity) => {
+  const changeOpacity = (opacity: number) => {
     HSVA.a = opacity
     RGBA.a = opacity
     dispatch()
   }
 
-  const changeColor = (rgba) => {
+  const changeColor = (rgba: RGBA) => {
     RGBA = rgba
     HSVA = RGBAtoHSVA(rgba)
     update()
@@ -127,11 +135,7 @@ export const ColorPicker = ({
           onChange={changeOpacity}
           onChangeEnd={changeEnd}
         />
-        <Text
-          textRef={textRef}
-          onChange={changeColor}
-          onChangeEnd={changeEnd}
-        />
+        <Text textRef={textRef} onChange={changeColor} />
         <ColorList colorList={colorList} onChange={changeColor} />
       </Styled.Container>
     </Styled.ColorPicker>

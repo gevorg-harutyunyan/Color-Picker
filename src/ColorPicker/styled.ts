@@ -32,7 +32,7 @@ export const RangeContainer = styled.div`
   position: relative;
 `
 
-export const Pointer = styled.div`
+export const Pointer = styled.div<{ area?: boolean }>`
   width: 12px;
   height: 12px;
   position: absolute;
@@ -42,7 +42,7 @@ export const Pointer = styled.div`
   outline: 1px solid grey;
   border-radius: 50%;
   margin-left: -10px;
-  margin-top: ${({ area }) => (area ? "-10px" : 0)};
+  margin-top: ${({ area = false }) => (area ? "-10px" : 0)};
 `
 
 const backgrounds = {
@@ -79,11 +79,13 @@ const backgrounds = {
   `,
 }
 
-export const Background = styled.div`
+type BackgroundType = "white" | "black" | "all" | "mainGradient" | "lattice"
+
+export const Background = styled.div<{ type?: BackgroundType }>`
   position: absolute;
   width: 100%;
   height: 100%;
-  ${({ type }) => backgrounds[type]}
+  ${({ type }) => type && backgrounds[type]}
 `
 
 export const TextContainer = styled.div``

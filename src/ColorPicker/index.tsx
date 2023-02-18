@@ -1,19 +1,31 @@
-import { useEffect, useRef, useState } from "react"
+import { FC, useEffect, useRef, useState } from "react"
 import { ColorPicker } from "./ColorPicker"
 import * as Styled from "./styled"
 
-export const ColorInput = ({ color, colorList, onChange, onChangeEnd }) => {
-  const ref = useRef()
+type Props = {
+  color: string
+  colorList: string[]
+  onChange: (color: string) => void
+  onChangeEnd: (color: string) => void
+}
+
+export const ColorInput: FC<Props> = ({
+  color,
+  colorList,
+  onChange,
+  onChangeEnd,
+}) => {
+  const ref = useRef<HTMLDivElement>(null)
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
   const closeColorPicker = () => setIsColorPickerOpen(false)
   const toggleColorPicker = () => setIsColorPickerOpen(!isColorPickerOpen)
 
-  const click = (e) => {
+  const click = () => {
     toggleColorPicker()
   }
 
-  const clickOutside = (e) => {
-    if (isColorPickerOpen && !ref.current.contains(e.target)) {
+  const clickOutside = (e: MouseEvent) => {
+    if (isColorPickerOpen && !ref.current?.contains(e.target as Node)) {
       closeColorPicker()
     }
   }
@@ -26,13 +38,13 @@ export const ColorInput = ({ color, colorList, onChange, onChangeEnd }) => {
     }
   }, [isColorPickerOpen])
 
-  const change = (color) => {
-    ref.current.style.backgroundColor = color
+  const change = (color: string) => {
+    ref.current?.style.setProperty("background", color)
     onChange(color)
   }
 
-  const changeEnd = (color) => {
-    ref.current.style.backgroundColor = color
+  const changeEnd = (color: string) => {
+    ref.current?.style.setProperty("background", color)
     onChangeEnd(color)
   }
 
