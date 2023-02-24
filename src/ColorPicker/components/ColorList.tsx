@@ -1,6 +1,6 @@
-import { FC } from "react"
+import { FC, memo } from "react"
 import { strToRGBA } from "../util"
-import { RGBA } from "ColorPicker/types"
+import { RGBA } from "../types"
 import * as Styled from "../styled"
 
 type Props = {
@@ -8,22 +8,18 @@ type Props = {
   onChange: (rgba: RGBA) => void
 }
 
-export const ColorList: FC<Props> = ({ colorList, onChange }) => {
+export const ColorList: FC<Props> = memo(({ colorList, onChange }) => {
   const clicked = (color: string) => () => {
     onChange(strToRGBA(color))
   }
 
   return (
-    <Styled.ColorList>
+    <Styled.ListContainer>
       {colorList.map((color, index) => {
         return (
-          <Styled.ColorListItem
-            key={index}
-            color={color}
-            onClick={clicked(color)}
-          />
+          <Styled.ListItem key={index} color={color} onClick={clicked(color)} />
         )
       })}
-    </Styled.ColorList>
+    </Styled.ListContainer>
   )
-}
+})

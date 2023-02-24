@@ -1,18 +1,13 @@
-import { FC, useEffect, useRef } from "react"
-import { PointerMoveFn } from "ColorPicker/types"
+import { FC, memo, useEffect, useRef } from "react"
 import * as Styled from "../styled"
+import { areaPointer } from "../util"
 
 type Props = {
-  areaPointer: PointerMoveFn
   onChange: (saturation: number, value: number) => void
   onChangeEnd: () => void
 }
 
-export const ColorArea: FC<Props> = ({
-  areaPointer,
-  onChange,
-  onChangeEnd,
-}) => {
+export const ColorArea: FC<Props> = memo(({ onChange, onChangeEnd }) => {
   const areaRef = useRef<HTMLDivElement>(null)
   const pointerRef = useRef<HTMLDivElement>(null)
 
@@ -45,10 +40,10 @@ export const ColorArea: FC<Props> = ({
 
   return (
     <Styled.ColorArea ref={areaRef}>
-      <Styled.Pointer area ref={pointerRef} />
       <Styled.Background className="bg-main" />
       <Styled.Background type="white" />
       <Styled.Background type="black" />
+      <Styled.Pointer area ref={pointerRef} />
     </Styled.ColorArea>
   )
-}
+})

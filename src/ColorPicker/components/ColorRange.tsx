@@ -1,18 +1,13 @@
-import { FC, useEffect, useRef } from "react"
-import { PointerMoveFn } from "ColorPicker/types"
+import { FC, memo, useEffect, useRef } from "react"
 import * as Styled from "../styled"
+import { mainColorPointer } from "../util"
 
 type Props = {
-  mainColorPointer: PointerMoveFn
   onChange: (hue: number) => void
   onChangeEnd: () => void
 }
 
-export const ColorRange: FC<Props> = ({
-  mainColorPointer,
-  onChange,
-  onChangeEnd,
-}) => {
+export const ColorRange: FC<Props> = memo(({ onChange, onChangeEnd }) => {
   const mainColorRef = useRef<HTMLDivElement>(null)
   const pointerRef = useRef<HTMLDivElement>(null)
 
@@ -44,8 +39,8 @@ export const ColorRange: FC<Props> = ({
 
   return (
     <Styled.RangeContainer ref={mainColorRef}>
-      <Styled.Pointer ref={pointerRef} />
       <Styled.Background type="all" />
+      <Styled.Pointer ref={pointerRef} />
     </Styled.RangeContainer>
   )
-}
+})

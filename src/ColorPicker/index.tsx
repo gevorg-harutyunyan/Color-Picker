@@ -1,63 +1,64 @@
-import { FC, useEffect, useRef, useState } from "react"
+import { FC, memo, useCallback, useEffect, useRef, useState } from "react"
 import { ColorPicker } from "./ColorPicker"
 import * as Styled from "./styled"
 
 type Props = {
-  color: string
-  colorList: string[]
-  onChange: (color: string) => void
-  onChangeEnd: (color: string) => void
+  color?: string
+  colorList?: string[]
+  onChange?: (color: string) => void
+  onChangeEnd?: (color: string) => void
 }
 
-export const ColorInput: FC<Props> = ({
-  color,
-  colorList,
-  onChange,
-  onChangeEnd,
-}) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
-  const closeColorPicker = () => setIsColorPickerOpen(false)
-  const toggleColorPicker = () => setIsColorPickerOpen(!isColorPickerOpen)
+export const ColorInput: FC<Props> = memo(
+  ({ color = "#123456", colorList = [], onChange, onChangeEnd }) => {
+    const ref = useRef<HTMLDivElement>(null)
+    const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
+    const closeColorPicker = () => setIsColorPickerOpen(false)
+    const toggleColorPicker = () => setIsColorPickerOpen(!isColorPickerOpen)
 
-  const click = () => {
-    toggleColorPicker()
-  }
-
-  const clickOutside = (e: MouseEvent) => {
-    if (isColorPickerOpen && !ref.current?.contains(e.target as Node)) {
-      closeColorPicker()
+    const click = () => {
+      toggleColorPicker()
     }
-  }
 
-  useEffect(() => {
-    window.addEventListener("mousedown", clickOutside)
-
-    return () => {
-      window.removeEventListener("mousedown", clickOutside)
+    const clickOutside = (e: MouseEvent) => {
+      if (isColorPickerOpen && !ref.current?.contains(e.target as Node)) {
+        closeColorPicker()
+      }
     }
-  }, [isColorPickerOpen])
 
-  const change = (color: string) => {
-    ref.current?.style.setProperty("background", color)
-    onChange(color)
+    useEffect(() => {
+      ref.current?.style.setProperty("background", color)
+    }, [color])
+
+    useEffect(() => {
+      isColorPickerOpen && window.addEventListener("mousedown", clickOutside)
+
+      return () => {
+        window.removeEventListener("mousedown", clickOutside)
+      }
+    }, [isColorPickerOpen])
+
+    const change = useCallback((color: string) => {
+      ref.current?.style.setProperty("background", color)
+      onChange?.(color)
+    }, [])
+
+    const changeEnd = useCallback((color: string) => {
+      ref.current?.style.setProperty("background", color)
+      onChangeEnd?.(color)
+    }, [])
+
+    return (
+      <Styled.ColorIcon ref={ref} onClick={click}>
+        {isColorPickerOpen && (
+          <ColorPicker
+            initialColor={color}
+            colorList={colorList}
+            onChange={change}
+            onChangeEnd={changeEnd}
+          />
+        )}
+      </Styled.ColorIcon>
+    )
   }
-
-  const changeEnd = (color: string) => {
-    ref.current?.style.setProperty("background", color)
-    onChangeEnd(color)
-  }
-
-  return (
-    <Styled.ColorIcon ref={ref} color={color} onClick={click}>
-      {isColorPickerOpen && (
-        <ColorPicker
-          initialColor={color}
-          colorList={colorList}
-          onChange={change}
-          onChangeEnd={changeEnd}
-        />
-      )}
-    </Styled.ColorIcon>
-  )
-}
+)

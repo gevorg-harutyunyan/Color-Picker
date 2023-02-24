@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react"
+import { FC, useCallback, useEffect, useRef } from "react"
 import { ColorRange } from "./components/ColorRange"
 import { OpacityRange } from "./components/OpacityRange"
 import { ColorArea } from "./components/ColorArea"
@@ -6,15 +6,17 @@ import { Text } from "./components/Text"
 import { ColorList } from "./components/ColorList"
 import {
   linearGradient,
-  pointerMove,
   strToRGBA,
   RGBAToStr,
   RGBAToHex,
   RGBAtoHSVA,
   HSVAtoRGBA,
   setTextValue,
+  areaPointer,
+  mainColorPointer,
+  opacityPointer,
 } from "./util"
-import { RGBA } from "./types"
+import { HSVA, RGBA } from "./types"
 import * as Styled from "./styled"
 
 type Props = {
@@ -30,13 +32,9 @@ export const ColorPicker: FC<Props> = ({
   onChange,
   onChangeEnd,
 }) => {
-  const textRef = useRef<HTMLDivElement>(null)
+  const textRef = useRef<HTMLInputElement>(null)
 
-  const areaPointer = pointerMove()
-  const mainColorPointer = pointerMove()
-  const opacityPointer = pointerMove()
-
-  let HSVA = {
+  let HSVA: HSVA = {
     h: 0,
     s: 0,
     v: 0,
@@ -81,60 +79,46 @@ export const ColorPicker: FC<Props> = ({
     setTextValue(textRef.current, RGBAToHex(RGBA))
   }
 
-  const changeArea = (saturation: number, value: number) => {
+  const changeArea = useCallback((saturation: number, value: number) => {
     HSVA.s = saturation
     HSVA.v = value
     RGBA = HSVAtoRGBA(HSVA)
     updatePointerColors()
     dispatch()
-  }
+  }, [])
 
-  const changeMainColor = (hue: number) => {
+  const changeMainColor = useCallback((hue: number) => {
     HSVA.h = hue
     RGBA = HSVAtoRGBA(HSVA)
     updatePointerColors()
     dispatch()
-  }
+  }, [])
 
-  const changeOpacity = (opacity: number) => {
+  const changeOpacity = useCallback((opacity: number) => {
     HSVA.a = opacity
     RGBA.a = opacity
     dispatch()
-  }
+  }, [])
 
-  const changeColor = (rgba: RGBA) => {
+  const changeColor = useCallback((rgba: RGBA) => {
     RGBA = rgba
     HSVA = RGBAtoHSVA(rgba)
     update()
-    onChangeEnd(RGBAToHex(RGBA))
-  }
+    const color = RGBAToHex(RGBA)
+    onChange(color)
+    onChangeEnd(color)
+  }, [])
 
-  const changeEnd = () => {
+  const changeEnd = useCallback(() => {
     onChangeEnd(RGBAToHex(RGBA))
-  }
+  }, [])
 
   return (
-    <Styled.ColorPicker
-      onClick={(e) => {
-        e.stopPropagation()
-      }}
-    >
-      <ColorArea
-        areaPointer={areaPointer}
-        onChange={changeArea}
-        onChangeEnd={changeEnd}
-      />
+    <Styled.ColorPicker onClick={(e) => e.stopPropagation()}>
+      <ColorArea onChange={changeArea} onChangeEnd={changeEnd} />
       <Styled.Container>
-        <ColorRange
-          mainColorPointer={mainColorPointer}
-          onChange={changeMainColor}
-          onChangeEnd={changeEnd}
-        />
-        <OpacityRange
-          opacityPointer={opacityPointer}
-          onChange={changeOpacity}
-          onChangeEnd={changeEnd}
-        />
+        <ColorRange onChange={changeMainColor} onChangeEnd={changeEnd} />
+        <OpacityRange onChange={changeOpacity} onChangeEnd={changeEnd} />
         <Text textRef={textRef} onChange={changeColor} />
         <ColorList colorList={colorList} onChange={changeColor} />
       </Styled.Container>

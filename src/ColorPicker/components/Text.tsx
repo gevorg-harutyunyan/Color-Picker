@@ -1,14 +1,14 @@
-import { FC, RefObject } from "react"
+import { FC, memo, RefObject } from "react"
 import { strToRGBA } from "../util"
-import { RGBA } from "ColorPicker/types"
+import { RGBA } from "../types"
 import * as Styled from "../styled"
 
 type Props = {
-  textRef: RefObject<HTMLDivElement> | null | undefined
+  textRef: RefObject<HTMLInputElement>
   onChange: (rgba: RGBA) => void
 }
 
-export const Text: FC<Props> = ({ textRef, onChange }) => {
+export const Text: FC<Props> = memo(({ textRef, onChange }) => {
   const change = (e: any) => {
     if (e.code === "Enter") {
       onChange(strToRGBA(e.target?.value))
@@ -16,8 +16,8 @@ export const Text: FC<Props> = ({ textRef, onChange }) => {
   }
 
   return (
-    <Styled.TextContainer ref={textRef}>
-      <Styled.TextInput onKeyDown={change} />
+    <Styled.TextContainer>
+      <Styled.TextInput ref={textRef} onKeyDown={change} />
     </Styled.TextContainer>
   )
-}
+})

@@ -1,4 +1,4 @@
-import { Coords, HSVA, PointerMoveFn, RGBA } from "./types"
+import { Coords, HSVA, RGBA } from "./types"
 
 const X = 0,
   Y = 1
@@ -17,7 +17,7 @@ const setMainBackground = (element: HTMLDivElement, value: string) => {
   mainEl.style.background = value
 }
 
-export const pointerMove = (): PointerMoveFn => {
+export const createPointer = () => {
   let area: HTMLDivElement, pointer: HTMLDivElement
 
   const setAreaAndPointer = (
@@ -110,12 +110,26 @@ export const pointerMove = (): PointerMoveFn => {
   }
 }
 
-export const setTextValue = (element: HTMLDivElement | null, value: string) => {
-  element?.children[0].setAttribute("value", value)
+export const areaPointer = createPointer()
+export const mainColorPointer = createPointer()
+export const opacityPointer = createPointer()
+
+export const setTextValue = (
+  element: HTMLInputElement | null,
+  value: string
+) => {
+  if (!element) return
+  element.value = value
 }
 
+const attachAlpha = (value: string, alpha: number) =>
+  value.split(")").join(`,${alpha})`)
+
 export const linearGradient = (value: string): string =>
-  `linear-gradient(to right,transparent 0%, ${value} 100%)`
+  `linear-gradient(to right, transparent 0%, ${attachAlpha(
+    value,
+    0.6
+  )} 40%, ${value} 100%)`
 
 export const HSVAtoRGBA = (hsva: HSVA): RGBA => {
   const saturation = hsva.s / 100

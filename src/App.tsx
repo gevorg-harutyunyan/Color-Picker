@@ -13,9 +13,9 @@ export const App = () => {
     testRef.current?.style.setProperty("background", color)
   }
 
-  const colors = ["red", "rgb(98, 98, 245)", "green", "#123456", "#ffcc00"]
-
   const initialColor = "#123456"
+
+  const colors = ["red", "rgb(98, 98, 245)", "green", "#123456", "#ffcc00"]
 
   return (
     <>

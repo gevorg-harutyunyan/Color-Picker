@@ -1,19 +1,13 @@
-import { FC, useEffect, useRef } from "react"
-import { getAlpha, transformToValue } from "../util"
-import { PointerMoveFn } from "ColorPicker/types"
+import { FC, memo, useEffect, useRef } from "react"
+import { getAlpha, opacityPointer, transformToValue } from "../util"
 import * as Styled from "../styled"
 
 type Props = {
-  opacityPointer: PointerMoveFn
   onChange: (alpha: number) => void
   onChangeEnd: () => void
 }
 
-export const OpacityRange: FC<Props> = ({
-  opacityPointer,
-  onChange,
-  onChangeEnd,
-}) => {
+export const OpacityRange: FC<Props> = memo(({ onChange, onChangeEnd }) => {
   const opacityRef = useRef<HTMLDivElement>(null)
   const pointerRef = useRef<HTMLDivElement>(null)
 
@@ -44,9 +38,9 @@ export const OpacityRange: FC<Props> = ({
 
   return (
     <Styled.RangeContainer ref={opacityRef}>
-      <Styled.Pointer ref={pointerRef} />
       <Styled.Background type="lattice" />
       <Styled.Background type="mainGradient" className="bg-main" />
+      <Styled.Pointer ref={pointerRef} />
     </Styled.RangeContainer>
   )
-}
+})
