@@ -1,8 +1,9 @@
-import { useRef } from "react"
+import { useMemo, useRef, useState } from "react"
 import { ColorInput } from "./ColorPicker"
 import * as Styled from "./styled"
 
 export const App = () => {
+  const [color, setColor] = useState<string>("#123456")
   const testRef = useRef<HTMLDivElement>(null)
 
   const change = (color: string) => {
@@ -10,19 +11,20 @@ export const App = () => {
   }
 
   const changeEnd = (color: string) => {
-    testRef.current?.style.setProperty("background", color)
+    setColor(color)
   }
 
-  const initialColor = "#123456"
-
-  const colors = ["red", "rgb(98, 98, 245)", "green", "#123456", "#ffcc00"]
+  const colors = useMemo(
+    () => ["red", "rgb(98, 98, 245)", "green", "#123456", "#ffcc00"],
+    []
+  )
 
   return (
     <>
       <Styled.GlobalStyles />
       <div className="App">
         <ColorInput
-          color={initialColor}
+          color={color}
           colorList={colors}
           onChange={change}
           onChangeEnd={changeEnd}
@@ -33,7 +35,7 @@ export const App = () => {
             width: 200,
             height: 200,
             float: "right",
-            backgroundColor: initialColor,
+            backgroundColor: color,
           }}
         ></div>
       </div>
