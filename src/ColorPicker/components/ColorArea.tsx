@@ -7,7 +7,7 @@ type Props = {
   onChangeEnd: () => void
 }
 
-export const ColorArea: FC<Props> = memo(({ onChange, onChangeEnd }) => {
+const ColorAreaComponent: FC<Props> = ({ onChange, onChangeEnd }) => {
   const areaRef = useRef<HTMLDivElement>(null)
   const pointerRef = useRef<HTMLDivElement>(null)
 
@@ -46,4 +46,6 @@ export const ColorArea: FC<Props> = memo(({ onChange, onChangeEnd }) => {
       <Styled.Pointer area ref={pointerRef} />
     </Styled.ColorArea>
   )
-})
+}
+
+export const ColorArea: FC<Props> = memo(ColorAreaComponent)

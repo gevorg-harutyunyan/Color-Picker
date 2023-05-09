@@ -26,12 +26,7 @@ type Props = {
   onChangeEnd: (color: string) => void
 }
 
-export const ColorPicker: FC<Props> = ({
-  initialColor,
-  colorList,
-  onChange,
-  onChangeEnd,
-}) => {
+export const ColorPicker: FC<Props> = ({ initialColor, colorList, onChange, onChangeEnd }) => {
   const textRef = useRef<HTMLInputElement>(null)
 
   let HSVA: HSVA = {

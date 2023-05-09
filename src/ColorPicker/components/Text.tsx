@@ -1,4 +1,4 @@
-import { FC, memo, RefObject } from "react"
+import { FC, KeyboardEvent, memo, RefObject } from "react"
 import { strToRGBA } from "../util"
 import { RGBA } from "../types"
 import * as Styled from "../styled"
@@ -8,10 +8,11 @@ type Props = {
   onChange: (rgba: RGBA) => void
 }
 
-export const Text: FC<Props> = memo(({ textRef, onChange }) => {
-  const change = (e: any) => {
+const TextComponent: FC<Props> = ({ textRef, onChange }) => {
+  const change = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.code === "Enter") {
-      onChange(strToRGBA(e.target?.value))
+      const target = e.target as HTMLInputElement
+      onChange(strToRGBA(target.value))
     }
   }
 
@@ -20,4 +21,6 @@ export const Text: FC<Props> = memo(({ textRef, onChange }) => {
       <Styled.TextInput ref={textRef} onKeyDown={change} />
     </Styled.TextContainer>
   )
-})
+}
+
+export const Text: FC<Props> = memo(TextComponent)

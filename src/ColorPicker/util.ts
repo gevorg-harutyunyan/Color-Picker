@@ -3,8 +3,7 @@ import { Coords, HSVA, RGBA } from "./types"
 const X = 0,
   Y = 1
 
-export const transformToValue = (number: number, max: number): number =>
-  Math.floor((100 / max) * number)
+export const transformToValue = (number: number, max: number): number => Math.floor((100 / max) * number)
 
 export const getAlpha = (value: number): number => value / 100
 
@@ -20,10 +19,7 @@ const setMainBackground = (element: HTMLDivElement, value: string) => {
 export const createPointer = () => {
   let area: HTMLDivElement, pointer: HTMLDivElement
 
-  const setAreaAndPointer = (
-    areaEl: HTMLDivElement,
-    pointerEl: HTMLDivElement
-  ) => {
+  const setAreaAndPointer = (areaEl: HTMLDivElement, pointerEl: HTMLDivElement) => {
     area = areaEl
     pointer = pointerEl
   }
@@ -73,10 +69,7 @@ export const createPointer = () => {
 
   const updateCoords = (coefficient: number[]): void => {
     const limit = getPointerLimit()
-    changePointerCoords([
-      coefficient[X] * limit.right,
-      coefficient[Y] * limit.bottom,
-    ])
+    changePointerCoords([coefficient[X] * limit.right, coefficient[Y] * limit.bottom])
   }
   const updateCoordX = (coefficient: number): void => {
     const limit = getPointerLimit()
@@ -114,30 +107,23 @@ export const areaPointer = createPointer()
 export const mainColorPointer = createPointer()
 export const opacityPointer = createPointer()
 
-export const setTextValue = (
-  element: HTMLInputElement | null,
-  value: string
-) => {
+export const setTextValue = (element: HTMLInputElement | null, value: string) => {
   if (!element) return
   element.value = value
 }
 
-const attachAlpha = (value: string, alpha: number) =>
-  value.split(")").join(`,${alpha})`)
+const attachAlpha = (value: string, alpha: number) => value.split(")").join(`,${alpha})`)
 
 export const linearGradient = (value: string): string =>
-  `linear-gradient(to right, transparent 0%, ${attachAlpha(
-    value,
-    0.6
-  )} 40%, ${value} 100%)`
+  `linear-gradient(to right, transparent 0%, ${attachAlpha(value, 0.6)} 40%, ${value} 100%)`
 
 export const HSVAtoRGBA = (hsva: HSVA): RGBA => {
   const saturation = hsva.s / 100
   const value = hsva.v / 100
   let chroma = saturation * value
-  let hueBy60 = hsva.h / 60
+  const hueBy60 = hsva.h / 60
   let x = chroma * (1 - Math.abs((hueBy60 % 2) - 1))
-  let m = value - chroma
+  const m = value - chroma
 
   chroma = chroma + m
   x = x + m
@@ -230,8 +216,7 @@ const emptyRGBA = {
 }
 
 export const strToRGBA = (str: string): RGBA => {
-  const regex =
-    /^((rgba)|rgb)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i
+  const regex = /^((rgba)|rgb)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i
 
   // Use canvas to convert the string to a valid color string
   const ctx = document.createElement("canvas").getContext("2d")

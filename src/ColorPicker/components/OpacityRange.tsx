@@ -7,7 +7,7 @@ type Props = {
   onChangeEnd: () => void
 }
 
-export const OpacityRange: FC<Props> = memo(({ onChange, onChangeEnd }) => {
+const OpacityRangeComponent: FC<Props> = ({ onChange, onChangeEnd }) => {
   const opacityRef = useRef<HTMLDivElement>(null)
   const pointerRef = useRef<HTMLDivElement>(null)
 
@@ -43,4 +43,6 @@ export const OpacityRange: FC<Props> = memo(({ onChange, onChangeEnd }) => {
       <Styled.Pointer ref={pointerRef} />
     </Styled.RangeContainer>
   )
-})
+}
+
+export const OpacityRange: FC<Props> = memo(OpacityRangeComponent)

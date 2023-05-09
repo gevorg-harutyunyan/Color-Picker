@@ -8,7 +8,7 @@ type Props = {
   onChange: (rgba: RGBA) => void
 }
 
-export const ColorList: FC<Props> = memo(({ colorList, onChange }) => {
+const ColorListComponent: FC<Props> = ({ colorList, onChange }) => {
   const clicked = (color: string) => () => {
     onChange(strToRGBA(color))
   }
@@ -16,10 +16,10 @@ export const ColorList: FC<Props> = memo(({ colorList, onChange }) => {
   return (
     <Styled.ListContainer>
       {colorList.map((color, index) => {
-        return (
-          <Styled.ListItem key={index} color={color} onClick={clicked(color)} />
-        )
+        return <Styled.ListItem key={index} color={color} onClick={clicked(color)} />
       })}
     </Styled.ListContainer>
   )
-})
+}
+
+export const ColorList: FC<Props> = memo(ColorListComponent)

@@ -14,21 +14,13 @@ export const App = () => {
     setColor(color)
   }
 
-  const colors = useMemo(
-    () => ["red", "rgb(98, 98, 245)", "green", "#123456", "#ffcc00"],
-    []
-  )
+  const colors = useMemo(() => ["red", "rgb(98, 98, 245)", "green", "#123456", "#ffcc00"], [])
 
   return (
     <>
       <Styled.GlobalStyles />
       <div className="App">
-        <ColorInput
-          color={color}
-          colorList={colors}
-          onChange={change}
-          onChangeEnd={changeEnd}
-        />
+        <ColorInput color={color} colorList={colors} onChange={change} onChangeEnd={changeEnd} />
         <div
           ref={testRef}
           style={{
