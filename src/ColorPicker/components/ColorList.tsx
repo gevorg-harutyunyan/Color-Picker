@@ -1,7 +1,6 @@
 import { FC, memo } from "react"
 import { strToRGBA } from "../util"
 import { RGBA } from "../types"
-import * as Styled from "../styled"
 
 type Props = {
   colorList: string[]
@@ -14,11 +13,11 @@ const ColorListComponent: FC<Props> = ({ colorList, onChange }) => {
   }
 
   return (
-    <Styled.ListContainer>
+    <div className="listContainer">
       {colorList.map((color, index) => {
-        return <Styled.ListItem key={index} color={color} onClick={clicked(color)} />
+        return <div key={index} className="listItem" style={{ backgroundColor: color }} onClick={clicked(color)} />
       })}
-    </Styled.ListContainer>
+    </div>
   )
 }
 

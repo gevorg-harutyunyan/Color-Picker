@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useEffect, useRef, useState } from "react"
-import { ColorPicker } from "./ColorPicker"
-import * as Styled from "./styled"
+import { Picker } from "./ColorPicker"
+import "./index.css"
 
 type Props = {
   color?: string
@@ -9,7 +9,7 @@ type Props = {
   onChangeEnd?: (color: string) => void
 }
 
-const ColorInputComponent: FC<Props> = ({ color = "#123456", colorList = [], onChange, onChangeEnd }) => {
+const ColorPickerComponent: FC<Props> = ({ color = "#123456", colorList = [], onChange, onChangeEnd }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
   const closeColorPicker = () => setIsColorPickerOpen(false)
@@ -48,12 +48,12 @@ const ColorInputComponent: FC<Props> = ({ color = "#123456", colorList = [], onC
   }, [])
 
   return (
-    <Styled.ColorIcon ref={ref} onClick={click}>
+    <div ref={ref} className="colorIcon" onClick={click}>
       {isColorPickerOpen && (
-        <ColorPicker initialColor={color} colorList={colorList} onChange={change} onChangeEnd={changeEnd} />
+        <Picker initialColor={color} colorList={colorList} onChange={change} onChangeEnd={changeEnd} />
       )}
-    </Styled.ColorIcon>
+    </div>
   )
 }
 
-export const ColorInput = memo(ColorInputComponent)
+export const ColorPicker = memo(ColorPickerComponent)

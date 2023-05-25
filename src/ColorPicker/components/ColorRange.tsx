@@ -1,5 +1,4 @@
 import { FC, memo, useEffect, useRef } from "react"
-import * as Styled from "../styled"
 import { mainColorPointer } from "../util"
 
 type Props = {
@@ -38,10 +37,10 @@ const ColorRangeComponent: FC<Props> = ({ onChange, onChangeEnd }) => {
   }, [])
 
   return (
-    <Styled.RangeContainer ref={mainColorRef}>
-      <Styled.Background type="all" />
-      <Styled.Pointer ref={pointerRef} />
-    </Styled.RangeContainer>
+    <div ref={mainColorRef} className="rangeContainer">
+      <div className="background backgroundAll" />
+      <div ref={pointerRef} className="pointer" />
+    </div>
   )
 }
 

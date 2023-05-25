@@ -1,7 +1,6 @@
 import { FC, KeyboardEvent, memo, RefObject } from "react"
 import { strToRGBA } from "../util"
 import { RGBA } from "../types"
-import * as Styled from "../styled"
 
 type Props = {
   textRef: RefObject<HTMLInputElement>
@@ -17,9 +16,9 @@ const TextComponent: FC<Props> = ({ textRef, onChange }) => {
   }
 
   return (
-    <Styled.TextContainer>
-      <Styled.TextInput ref={textRef} onKeyDown={change} />
-    </Styled.TextContainer>
+    <div>
+      <input ref={textRef} className="textInput" onKeyDown={change} />
+    </div>
   )
 }
 

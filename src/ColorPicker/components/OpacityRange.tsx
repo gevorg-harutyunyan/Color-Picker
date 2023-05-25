@@ -1,6 +1,5 @@
 import { FC, memo, useEffect, useRef } from "react"
 import { getAlpha, opacityPointer, transformToValue } from "../util"
-import * as Styled from "../styled"
 
 type Props = {
   onChange: (alpha: number) => void
@@ -37,11 +36,11 @@ const OpacityRangeComponent: FC<Props> = ({ onChange, onChangeEnd }) => {
   }, [])
 
   return (
-    <Styled.RangeContainer ref={opacityRef}>
-      <Styled.Background type="lattice" />
-      <Styled.Background type="mainGradient" className="bg-main" />
-      <Styled.Pointer ref={pointerRef} />
-    </Styled.RangeContainer>
+    <div ref={opacityRef} className="rangeContainer">
+      <div className="background backgroundLattice" />
+      <div className="background backgroundMainGradient bg-main" />
+      <div ref={pointerRef} className="pointer" />
+    </div>
   )
 }
 

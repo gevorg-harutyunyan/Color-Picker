@@ -17,7 +17,6 @@ import {
   opacityPointer,
 } from "./util"
 import { HSVA, RGBA } from "./types"
-import * as Styled from "./styled"
 
 type Props = {
   initialColor: string
@@ -26,7 +25,7 @@ type Props = {
   onChangeEnd: (color: string) => void
 }
 
-export const ColorPicker: FC<Props> = ({ initialColor, colorList, onChange, onChangeEnd }) => {
+export const Picker: FC<Props> = ({ initialColor, colorList, onChange, onChangeEnd }) => {
   const textRef = useRef<HTMLInputElement>(null)
 
   let HSVA: HSVA = {
@@ -109,14 +108,14 @@ export const ColorPicker: FC<Props> = ({ initialColor, colorList, onChange, onCh
   }, [])
 
   return (
-    <Styled.ColorPicker onClick={(e) => e.stopPropagation()}>
+    <div className="colorPicker" onClick={(e) => e.stopPropagation()}>
       <ColorArea onChange={changeArea} onChangeEnd={changeEnd} />
-      <Styled.Container>
+      <div className="container">
         <ColorRange onChange={changeMainColor} onChangeEnd={changeEnd} />
         <OpacityRange onChange={changeOpacity} onChangeEnd={changeEnd} />
         <Text textRef={textRef} onChange={changeColor} />
         <ColorList colorList={colorList} onChange={changeColor} />
-      </Styled.Container>
-    </Styled.ColorPicker>
+      </div>
+    </div>
   )
 }

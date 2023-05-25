@@ -1,5 +1,4 @@
 import { FC, memo, useEffect, useRef } from "react"
-import * as Styled from "../styled"
 import { areaPointer } from "../util"
 
 type Props = {
@@ -39,12 +38,12 @@ const ColorAreaComponent: FC<Props> = ({ onChange, onChangeEnd }) => {
   }, [])
 
   return (
-    <Styled.ColorArea ref={areaRef}>
-      <Styled.Background className="bg-main" />
-      <Styled.Background type="white" />
-      <Styled.Background type="black" />
-      <Styled.Pointer area ref={pointerRef} />
-    </Styled.ColorArea>
+    <div ref={areaRef} className="colorArea">
+      <div className="background bg-main" />
+      <div className="background backgroundWhite" />
+      <div className="background backgroundBlack" />
+      <div ref={pointerRef} className="pointer pointerArea" />
+    </div>
   )
 }
 
